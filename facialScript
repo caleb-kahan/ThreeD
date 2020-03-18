@@ -1,0 +1,18 @@
+ident
+torus
+0 0 0 20 70
+rotate
+x 30
+move
+250 175 0
+apply
+ident
+sphere
+250 250 0 200
+sphere
+200 300 50 20
+sphere
+300 300 50 20
+display
+save
+robotFace.png

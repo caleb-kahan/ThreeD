@@ -1,6 +1,6 @@
 from display import *
 from matrix import *
-
+import math
   # ====================
   # add the points for a rectagular prism whose
   # upper-left corner is (x, y, z) with width,
@@ -28,7 +28,18 @@ def add_box( points, x, y, z, width, height, depth ):
   # Returns a matrix of those points
   # ====================
 def generate_sphere( points, cx, cy, cz, r, step ):
-    pass
+    phi,theta = 0,0
+    while phi < 1:
+        theta = 0
+        while theta < 1:
+            x = cx + r * math.cos(math.pi*phi)
+            y = cy + r * math.cos(math.pi*2*theta)*math.sin(math.pi*phi)
+            z = cz + r * math.sin(math.pi*2*theta)*math.sin(math.pi*phi)
+            add_edge(points,x,y,z,x+1,y+1,z+1)
+            theta+=step
+        phi+=step
+    return points
+
 
   # ====================
   # adds all the points for a sphere with center
@@ -37,7 +48,11 @@ def generate_sphere( points, cx, cy, cz, r, step ):
   # necessary points
   # ====================
 def add_sphere( points, cx, cy, cz, r, step ):
-    pass
+    additive = []
+    additive = generate_sphere(additive,cx,cy,cz,r,step)
+    points.extend(additive)
+    #for col in additive:
+    #    add_point(points,col[0],col[1],col[2])
 
 
   # ====================
@@ -47,7 +62,17 @@ def add_sphere( points, cx, cy, cz, r, step ):
   # Returns a matrix of those points
   # ====================
 def generate_torus( points, cx, cy, cz, r0, r1, step ):
-    pass
+    theta,phi=0,0
+    while theta < 1:
+        phi = 0
+        while phi < 1:
+            x = cx + (r1 + r0*math.cos(2*math.pi*phi)) * math.sin(2*math.pi*theta)
+            y = cy + r0 * math.sin(2*math.pi*phi)
+            z = cz + (r1 + r0*math.cos(2*math.pi*phi)) * math.cos(2*math.pi*theta)
+            add_edge(points,x,y,z,x+1,y+1,z+1)
+            phi+=step
+        theta+=step
+    return points
 
   # ====================
   # adds all the points for a torus with center
@@ -56,7 +81,9 @@ def generate_torus( points, cx, cy, cz, r0, r1, step ):
   # necessary points
   # ====================
 def add_torus( points, cx, cy, cz, r0, r1, step ):
-    pass
+    additive = []
+    additive = generate_torus(additive,cx,cy,cz,r0,r1,step)
+    points.extend(additive)
 
 
 
